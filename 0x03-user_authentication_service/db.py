@@ -34,12 +34,14 @@ class DB:
         """this method adds a new user to the database
 
         Args:
-            email (string): email of the user
-            hashed_password (string): password to be saved in the db
+            email (string): email of the user.
+            hashed_password (string): password to be saved in the db.
 
         Returns:
-            _type_: _description_
+            user: A user object.
         """
+        if (email == "" or hashed_password == ""):
+            return
         user = User(email=email, hashed_password=hashed_password)
         session = self._session
         session.add(user)
