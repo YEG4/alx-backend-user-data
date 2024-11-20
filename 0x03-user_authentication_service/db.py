@@ -40,10 +40,13 @@ class DB:
         Returns:
             user: A user object.
         """
-        if (email == "" or hashed_password == ""):
-            return
-        user = User(email=email, hashed_password=hashed_password)
-        session = self._session
-        session.add(user)
-        session.commit()
+        try:
+            user = User(email=email, hashed_password=hashed_password)
+            session = self._session
+            session.add(user)
+            session.commit()
+        except:
+            session.rollback()
+            user = None
+
         return user
