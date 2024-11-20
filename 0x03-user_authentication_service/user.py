@@ -2,10 +2,8 @@
 """This file contains User Table.
 """
 
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
-
-Base = declarative_base()
+from base import Base
 
 
 class User(Base):
