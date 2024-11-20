@@ -59,7 +59,7 @@ class DB:
                 attributes.append(getattr(User, key))
                 values.append(value)
             else:
-                raise InvalidRequestError
+                raise InvalidRequestError()
 
         user = self.__session.query(User).filter(
             tuple_(*attributes).in_([tuple_(*values)])).first()
