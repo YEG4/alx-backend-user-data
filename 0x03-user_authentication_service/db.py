@@ -87,3 +87,4 @@ class DB:
             fields_updated,
             synchronize_session=False
         )
+        self.session.commit()
