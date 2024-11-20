@@ -71,8 +71,9 @@ class DB:
         return user
 
     def update_user(self, userId: int, **kwargs) -> None:
-        user = self.find_user_by(id=userId)
-        if user is None:
+        try:
+            user = self.find_user_by(id=userId)
+        except NoResultFound:
             return None
         for key, value in kwargs.items():
             if hasattr(User, key):
