@@ -54,17 +54,17 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """This method returns a user for a given condition
         """
-        attributes, values = [], []
+        fields, values = [], []
 
         for key, value in kwargs.items():
             if hasattr(User, key):
-                attributes.append(getattr(User, key))
+                fields.append(getattr(User, key))
                 values.append(value)
             else:
                 raise InvalidRequestError()
 
         user = self.__session.query(User).filter(
-            tuple_(*attributes).in_([tuple_(*values)])).first()
+            tuple_(*fields).in_([tuple_(*values)])).first()
         if user is None:
             raise NoResultFound()
         return user
