@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
+from sqlalchemy.exc import InvalidRequestError, NoResultFound
 from user import Base, User
 
 
@@ -50,3 +50,15 @@ class DB:
             user = None
 
         return user
+
+    def find_user_by(self, **kwargs) -> User:
+        email = kwargs['email']
+        if kwargs['email'] == "" or None:
+            raise InvalidRequestError()
+
+        user = self.__session.query().filter(
+            User.email == kwargs['email']).first()
+        if user is not None:
+            return user
+        else:
+            raise NoResultFound
