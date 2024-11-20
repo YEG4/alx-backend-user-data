@@ -71,10 +71,12 @@ class DB:
         return user
 
     def update_user(self, userId: int, **kwargs) -> None:
+        """This method updates a user based on columns provided.
+        """
         try:
             user = self.find_user_by(id=userId)
         except NoResultFound:
-            return ValueError()
+            return None
         for key, value in kwargs.items():
             if hasattr(User, key):
                 setattr(user, key, value)
