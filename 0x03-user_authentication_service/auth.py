@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""Hash module
+"""
+
 from bcrypt import hashpw, gensalt
 
 
