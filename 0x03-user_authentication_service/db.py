@@ -52,6 +52,8 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs) -> User:
+        """This method returns a user for a given condition
+        """
         attributes, values = [], []
 
         for key, value in kwargs.items():
