@@ -77,9 +77,13 @@ class DB:
             user = self.find_user_by(id=userId)
         except NoResultFound:
             return
+        fields_updated = {}
         for key, value in kwargs.items():
             if hasattr(User, key):
-                setattr(user, key, value)
-                self._session.commit()
+                fields_updated[getattr(User, key)] = value
             else:
                 raise ValueError()
+        self._session.query(User).filter(User.id == userId).update(
+            fields_updated,
+            synchronize_session=False
+        )
