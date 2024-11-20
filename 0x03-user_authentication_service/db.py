@@ -66,4 +66,4 @@ class DB:
         if user is not None:
             return user
         else:
-            raise NoResultFound
+            raise NoResultFound()
