@@ -8,6 +8,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 from user import Base, User
+from bcrypt import hashpw
 
 
 class DB:
@@ -88,3 +89,6 @@ class DB:
             synchronize_session=False
         )
         self.session.commit()
+
+    def _hash_password(hashed_password) -> bytes:
+        return hashpw(hashed_password)
