@@ -56,7 +56,7 @@ class DB:
 
         for key, value in kwargs.items():
             if hasattr(User, key):
-                attributes.append(key)
+                attributes.append(getattr(User, key))
                 values.append(value)
             else:
                 raise InvalidRequestError
