@@ -52,11 +52,10 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs) -> User:
-        email = kwargs['email']
-        if kwargs['email'] == "" or None:
+        if 'email' not in kwargs.keys():
             raise InvalidRequestError()
 
-        user = self.__session.query().filter(
+        user = self.__session.query(User).filter(
             User.email == kwargs['email']).first()
         if user is not None:
             return user
