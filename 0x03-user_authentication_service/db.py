@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """DB module
 """
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, tuple_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -52,11 +52,17 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs) -> User:
-        if 'email' not in kwargs.keys():
-            raise InvalidRequestError()
+        attributes, values = [], []
+
+        for key, value in kwargs.items():
+            if hasattr(User, key):
+                attributes.append(key)
+                values.append(value)
+            else:
+                raise InvalidRequestError
 
         user = self.__session.query(User).filter(
-            User.email == kwargs['email']).first()
+            tuple_(*attributes).in_([tuple_(*values)])).first()
         if user is not None:
             return user
         else:
